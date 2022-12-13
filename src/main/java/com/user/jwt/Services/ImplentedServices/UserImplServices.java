@@ -1,5 +1,8 @@
 package com.user.jwt.Services.ImplentedServices;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,4 +37,16 @@ public class UserImplServices implements UserServices {
         this.userRepo.delete(user);
 
     }
+
+    @Override
+    public List<UserDio> getAllUser() {
+
+        List<User> users = this.userRepo.findAll();
+        List<UserDio> UserDios = users.stream()
+                .map(user -> this.modelMapper.map(user, UserDio.class))
+                .collect(Collectors.toList());
+
+        return UserDios;
+    }
+
 }

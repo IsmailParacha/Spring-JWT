@@ -11,4 +11,6 @@ public interface UserServices {
 
     List<UserDio> getAllUser();
 
+    UserDio registerUser(UserDio userDto);
+
 }

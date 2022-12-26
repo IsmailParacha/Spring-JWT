@@ -5,10 +5,13 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.user.jwt.Entity.Role;
 import com.user.jwt.Entity.User;
 import com.user.jwt.Payload.UserDio;
+import com.user.jwt.Repository.RoleRepo;
 import com.user.jwt.Repository.UserRepo;
 import com.user.jwt.Services.UserServices;
 
@@ -19,6 +22,11 @@ public class UserImplServices implements UserServices {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleRepo roleRepo;
 
     @Override
     public UserDio createUser(UserDio UserDio) {
@@ -47,6 +55,17 @@ public class UserImplServices implements UserServices {
                 .collect(Collectors.toList());
 
         return UserDios;
+    }
+
+    @Override
+    public UserDio registerUser(UserDio userDto) {
+        User user = this.modelMapper.map(userDto, User.class);
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+
+        Role role = this.roleRepo.findById(502).get();
+        user.getRoles().add(role);
+        User adduser = this.userRepo.save(user);
+        return this.modelMapper.map(adduser, UserDio.class);
     }
 
 }

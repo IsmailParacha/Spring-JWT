@@ -11,14 +11,13 @@ import com.user.jwt.Repository.UserRepo;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
+    // LOADING USER FROM DATABASE BY USERNAME
     @Autowired
     private UserRepo userRepo;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Loading user from DB by name
-        User user = this.userRepo.findByName(username).orElseThrow(null);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = this.userRepo.findByName(email).orElseThrow();
         return user;
     }
-
 }

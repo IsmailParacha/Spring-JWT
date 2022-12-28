@@ -15,6 +15,7 @@ import lombok.Setter;
 public class UserDio {
     private int id;
     private String name;
+    private String email;
     private String password;
     private Set<RoleDio> roles = new HashSet<>();
 

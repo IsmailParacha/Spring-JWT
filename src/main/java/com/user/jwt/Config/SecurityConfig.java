@@ -44,8 +44,8 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers(PUBLIC_URLS).permitAll()
-                .requestMatchers(HttpMethod.GET).permitAll()// remove security from all GET APi
+                .antMatchers(PUBLIC_URLS).permitAll()
+                .antMatchers(HttpMethod.GET).permitAll()// remove security from all GET APi
                 .anyRequest()
                 .authenticated()
                 .and()

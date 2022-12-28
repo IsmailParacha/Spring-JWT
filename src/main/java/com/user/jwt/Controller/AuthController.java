@@ -42,8 +42,8 @@ public class AuthController {
     public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request) throws Exception
     // throws Exception
     {
-        this.authenticate(request.getName(), request.getPassword());
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getName());
+        this.authenticate(request.getEmail(), request.getPassword());
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getEmail());
         String token = this.jwtTokenHelper.generateToken(userDetails);
 
         JwtAuthResponse response = new JwtAuthResponse();
@@ -81,7 +81,7 @@ public class AuthController {
 
     // @GetMapping("/current-user/")
     // public ResponseEntity<UserDto> getUser(Principal principal) {
-    // User user = this.userRepo.findByEmail(principal.getName()).get();
+    // User user = this.userRepo.findByEmail(principal.getEmail()).get();
     // return new ResponseEntity<UserDto>(this.mapper.map(user, UserDto.class),
     // HttpStatus.OK);
     // }

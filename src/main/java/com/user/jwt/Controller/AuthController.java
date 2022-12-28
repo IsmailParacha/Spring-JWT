@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.user.jwt.Entity.User;
 import com.user.jwt.Payload.UserDio;
-import com.user.jwt.Security.JwtAuthRequest;
-import com.user.jwt.Security.JwtAuthResponse;
-import com.user.jwt.Security.JwtTokenHelper;
+import com.user.jwt.Security.*;
 import com.user.jwt.Services.UserServices;
+import com.user.jwt.exception.InvalidUserAndPassword;
 
 @RestController
 @RequestMapping("/api/v1/auth/")
@@ -63,7 +62,7 @@ public class AuthController {
             this.authenticationManager.authenticate(authenticationToken);
         } catch (BadCredentialsException e) {
             System.out.println("Invalid Detal!!");
-            throw new Exception(" password does not matched!!");
+            throw new InvalidUserAndPassword(" password does not matched!!");
         }
     }
 
@@ -83,7 +82,7 @@ public class AuthController {
 
     // @GetMapping("/current-user/")
     // public ResponseEntity<UserDto> getUser(Principal principal) {
-    // User user = this.userRepo.findByEmail(principal.getEmail()).get();
+    // User user = this.userRepo.findByEmail(principal.getName()).get();
     // return new ResponseEntity<UserDto>(this.mapper.map(user, UserDto.class),
     // HttpStatus.OK);
     // }

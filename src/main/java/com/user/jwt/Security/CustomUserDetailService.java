@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.user.jwt.Entity.User;
 import com.user.jwt.Repository.UserRepo;
+import com.user.jwt.exception.ResourceNotFoundException;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
@@ -17,7 +18,8 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = this.userRepo.findByEmail(email).orElseThrow();
+        User user = this.userRepo.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "email:" + email, 0));
         return user;
     }
 }

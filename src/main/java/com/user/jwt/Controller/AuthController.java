@@ -1,5 +1,6 @@
 package com.user.jwt.Controller;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.user.jwt.Entity.User;
 import com.user.jwt.Payload.UserDio;
 import com.user.jwt.Security.JwtAuthRequest;
 import com.user.jwt.Security.JwtAuthResponse;
@@ -32,8 +34,8 @@ public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-    // @Autowired
-    // private ModelMapper mapper;
+    @Autowired
+    private ModelMapper mapper;
 
     @Autowired
     private UserServices userService;
@@ -48,7 +50,7 @@ public class AuthController {
 
         JwtAuthResponse response = new JwtAuthResponse();
         response.setToken(token);
-        // response.setUser(this.mapper.map((User) userDetails, UserDto.class));
+        response.setUser(this.mapper.map((User) userDetails, UserDio.class));
         return new ResponseEntity<JwtAuthResponse>(response, HttpStatus.OK);
     }
 

@@ -24,7 +24,7 @@ public class JwtApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println(this.passwordEncoder.encode("amir"));
+		// System.out.println(this.passwordEncoder.encode("amir"));
 		// try {
 		// Role role = new Role();
 		// role.setId(AppConstants.ADMIN);
